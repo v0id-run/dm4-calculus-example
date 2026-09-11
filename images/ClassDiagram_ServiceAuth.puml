@@ -1,0 +1,37 @@
+@startuml
+class User {
+    UserID int
+    Login string
+    PasswordHash []byte
+    CheckPassword(string password) bool
+}
+
+class Administrator {
+}
+
+class Student {
+    GradeOfCourse int
+    Surname string
+    Name string
+    Patronimyc string
+    GroupID int
+}
+
+class Teacher {
+    Surname string
+    Name string
+    Patronimyc string
+}
+
+User <|--- Administrator
+User <|--- Teacher
+User <|--- Student
+
+class AuthorizationService {
+    db *sql.DB
+    AuthorizeUser(login, password string) (string, error)
+    CheckAndGetUsersCookie(cookie string) (User, error)
+    ChangePassword(login, oldPassword, newPassword string) error
+}
+
+@enduml
